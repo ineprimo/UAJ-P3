@@ -1,5 +1,5 @@
 using UnityEngine;
-//using shortid;
+using shortid;
 
 public class Tracker : MonoBehaviour
 {
@@ -32,9 +32,9 @@ public class Tracker : MonoBehaviour
         //dado que no tenemos un servidor al que pedir que genere ids unicas, tenemos que generarlas en el propio ordenador,
         //usando un gran tama�o de ids y la posibilidad de usar numeros y caracteres especiales ademas de letras, 
         //las posibilidades de que se generen dos ids iguales en distintos ordenadores son muy bajas (aunque no nunca seran 0)
-        //ShortIdOptions options = new ShortIdOptions(useNumbers: true, useSpecialCharacters: true, length: 16);
-        //this.sessionId = ShortId.Generate(options);
-        this.sessionId = "1";
+        ShortIdOptions options = new ShortIdOptions(useNumbers: true, useSpecialCharacters: true, length: 16);
+        this.sessionId = ShortId.Generate(options);
+        //this.sessionId = "1";
         
         //conectamos
         ISerializer serializer = new JsonSerializer();
