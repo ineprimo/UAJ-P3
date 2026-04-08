@@ -1,5 +1,5 @@
 using UnityEngine;
-using shortid;
+//using shortid;
 
 public class Tracker : MonoBehaviour
 {
@@ -23,18 +23,19 @@ public class Tracker : MonoBehaviour
         }
     }
 
-    // inicializa sistema de telemetría
+    // inicializa sistema de telemetrï¿½a
     public void Init()
     {
         //Los ids de sesion se pueden personalizar mucho, mirar el github de esta libreria (en uno de los documentos esta puesto el enlace tmb)
         //https://github.com/bolorundurowb/shortid
 
         //dado que no tenemos un servidor al que pedir que genere ids unicas, tenemos que generarlas en el propio ordenador,
-        //usando un gran tamaño de ids y la posibilidad de usar numeros y caracteres especiales ademas de letras, 
+        //usando un gran tamaï¿½o de ids y la posibilidad de usar numeros y caracteres especiales ademas de letras, 
         //las posibilidades de que se generen dos ids iguales en distintos ordenadores son muy bajas (aunque no nunca seran 0)
-        ShortIdOptions options = new ShortIdOptions(useNumbers: true, useSpecialCharacters: true, length: 16);
-        this.sessionId = ShortId.Generate(options);
-
+        //ShortIdOptions options = new ShortIdOptions(useNumbers: true, useSpecialCharacters: true, length: 16);
+        //this.sessionId = ShortId.Generate(options);
+        this.sessionId = "1";
+        
         //conectamos
         ISerializer serializer = new JsonSerializer();
         persistence = new FilePersistence(serializer, sessionId);
@@ -46,7 +47,7 @@ public class Tracker : MonoBehaviour
         TrackEvent(new TrackerEvent("session_start", sessionId, matchId));
     }
 
-    // método para llamar desde el juego
+    // mï¿½todo para llamar desde el juego
     public void TrackEvent(TrackerEvent e)
     {
         if (persistence != null)
