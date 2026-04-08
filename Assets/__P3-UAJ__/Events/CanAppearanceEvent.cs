@@ -1,0 +1,21 @@
+using UnityEngine;
+
+// no se donde poner esto tbh
+public enum CanType
+{
+    Blue,
+    Red,
+    Green,
+    Pink
+}
+
+public class CanAppearanceEvent : TrackerEvent
+{
+
+    public CanType canType { get; set; } // tipo de lata
+    public CanAppearanceEvent(string type, string session, byte matchId, CanType _canType) : base(type, session, matchId)
+    {
+        canType = _canType;
+
+    }
+}
