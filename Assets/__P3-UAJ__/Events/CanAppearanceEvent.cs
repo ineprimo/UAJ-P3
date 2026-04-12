@@ -6,13 +6,13 @@ public enum CanType
     Blue,
     Red,
     Green,
-    Pink
+    Pink,
+    Cyan
 }
 
 public class CanAppearanceEvent : TrackerEvent
 {
-
-    public CanType canType { get; set; } // tipo de lata
+    public CanType canType; // tipo de lata
     public CanAppearanceEvent(string type, string session, byte matchId, CanType _canType) : base(type, session, matchId)
     {
         canType = _canType;

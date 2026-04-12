@@ -49,7 +49,10 @@ public class LataManager : MonoBehaviour
     void LataCreator()
     {
         int colorRandom = Random.Range(0, maxRandom);
-        Debug.Log("Lata de color: " +  colorRandom + " " + maxRandom);
+        //Debug.Log("Lata de color: " +  colorRandom + " " + maxRandom);
+        
+        Tracker.Instance.TrackEvent(new CanAppearanceEvent("can_appears", Tracker.Instance.getSessionId(), Tracker.Instance.getMatchId(), (CanType)colorRandom));
+        
         Instantiate(_lata[colorRandom], _tr).transform.position = new Vector3(_tr.position.x, _tr.position.y, _tr.position.z + _randomizer);
         
         if(colorRandom ==0 || colorRandom ==1)
