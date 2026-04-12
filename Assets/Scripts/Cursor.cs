@@ -44,8 +44,9 @@ public class Cursor : MonoBehaviour
 
         if (Physics.Raycast(_cam.ScreenPointToRay(Input.mousePosition), out _hit, 1000, _layer) && Input.GetMouseButtonDown(0))
         {
-            Debug.Log("Raycast: " + _hit.transform.gameObject);
-
+            //Debug.Log("Raycast: " + _hit.transform.gameObject);
+            Tracker.Instance.TrackEvent(new ClickEvent("mouse_click",Tracker.Instance.getSessionId(), Tracker.Instance.getMatchId(), new System.Numerics.Vector2(Input.mousePosition.x, Input.mousePosition.y)));
+            
             GameObject obj = _hit.transform.gameObject;
 
             if (obj.GetComponent<LightController>() != null)
