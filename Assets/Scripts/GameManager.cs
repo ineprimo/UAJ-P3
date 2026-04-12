@@ -125,6 +125,7 @@ public class GameManager : MonoBehaviour
     }
     public void PlayerDies()
     {
+        Tracker.Instance.TrackEvent(new TrackerEvent("match_end", Tracker.Instance.getSessionId(), Tracker.Instance.getMatchId()));
         SceneManager.LoadScene("QuechuScene");
     }
     public void ResetLifes()

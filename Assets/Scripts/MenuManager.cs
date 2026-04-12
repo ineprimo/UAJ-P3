@@ -39,6 +39,7 @@ public class MenuManager : MonoBehaviour
     public void LoadPlayState()
     {
         _hide = true;
+        Tracker.Instance.TrackEvent(new TrackerEvent("match_start", Tracker.Instance.getSessionId(), Tracker.Instance.getMatchId()));
         StartCoroutine(Fade());        
     }
 

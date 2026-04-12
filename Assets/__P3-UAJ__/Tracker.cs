@@ -16,12 +16,12 @@ public class Tracker : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            Init();
         }
         else
         {
             Destroy(gameObject);
         }
-        Init();
     }
 
     // inicializa sistema de telemetr�a
