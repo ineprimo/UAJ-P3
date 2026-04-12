@@ -21,20 +21,23 @@ public class FilePersistence : IPersistence
 
     public void Send(TrackerEvent trackerEvent)
     {
-        // Convertimos el evento en texto y lo añadimos
+        // Convertimos el evento en texto y lo aï¿½adimos
         string data = serializer.Serialize(trackerEvent);
         queue.Enqueue(data);
     }
 
     public void Flush()
     {
-        if (queue.Count == 0) return;  // cola vacía
+        //Debug.Log("Eventos a escribir: " + queue.Count);
+        if (queue.Count == 0) return;  // cola vacï¿½a
 
-        // Abrimos el archivo y mientras tengamos la cola con cosas las vamos añadiendo
+        //Debug.Log("Escribiendo en: " + this.filePath);
+        // Abrimos el archivo y mientras tengamos la cola con cosas las vamos aï¿½adiendo
         using (StreamWriter writer = new StreamWriter(filePath, true))
         {
             while (queue.Count > 0)
             {
+                //Debug.Log(queue.Peek());
                 writer.WriteLine(queue.Dequeue());
             }
         }

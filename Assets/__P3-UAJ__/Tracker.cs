@@ -21,6 +21,7 @@ public class Tracker : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        Init();
     }
 
     // inicializa sistema de telemetr�a
@@ -29,12 +30,8 @@ public class Tracker : MonoBehaviour
         //Los ids de sesion se pueden personalizar mucho, mirar el github de esta libreria (en uno de los documentos esta puesto el enlace tmb)
         //https://github.com/bolorundurowb/shortid
 
-        //dado que no tenemos un servidor al que pedir que genere ids unicas, tenemos que generarlas en el propio ordenador,
-        //usando un gran tama�o de ids y la posibilidad de usar numeros y caracteres especiales ademas de letras, 
-        //las posibilidades de que se generen dos ids iguales en distintos ordenadores son muy bajas (aunque no nunca seran 0)
-        ShortIdOptions options = new ShortIdOptions(useNumbers: true, useSpecialCharacters: true, length: 16);
-        this.sessionId = ShortId.Generate(options);
-        //this.sessionId = "1";
+        //pedimos un nuevo id de sesion
+        sessionId = getNewSessionId();
         
         //conectamos
         ISerializer serializer = new JsonSerializer();
@@ -64,8 +61,18 @@ public class Tracker : MonoBehaviour
     public string getSessionId() { return sessionId; }
 
     //cuando se quiera lanzar un evento se pide el id de partida al tracker para rellenar la info del evento
-    public byte getMatchId() { return matchId; } 
-
+    public byte getMatchId() { return matchId; }
+    
+    //al iniciar la sesion generamos un id unico (si tuvieramos un servidor sustituiriamos la generacion del id por una request al servidor) 
+    private string getNewSessionId()
+    {
+        //dado que no tenemos un servidor al que pedir que genere ids unicas, tenemos que generarlas en el propio ordenador,
+        //usando un gran tama�o de ids y la posibilidad de usar numeros y caracteres especiales ademas de letras, 
+        //las posibilidades de que se generen dos ids iguales en distintos ordenadores son muy bajas (aunque no nunca seran 0)
+        ShortIdOptions options = new ShortIdOptions(useNumbers: true, useSpecialCharacters: true, length: 16);
+        return ShortId.Generate(options);
+    }
+    
     // cuando el jugador cierre el juego
     void OnApplicationQuit()
     {
