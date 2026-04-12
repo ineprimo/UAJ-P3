@@ -110,6 +110,8 @@ public class GameManager : MonoBehaviour
     
     public void LoseLife()
     {
+        Tracker.Instance.TrackEvent(new LifeLostEvent(Tracker.Instance.getSessionId(), Tracker.Instance.getMatchId()));
+        
         Camera.main.GetComponent<Shake>().start = true;
         if (_lifes > 1)
         {
