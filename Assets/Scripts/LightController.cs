@@ -10,6 +10,8 @@ public class LightController : MonoBehaviour
     [SerializeField] private Light _light;
     public Animator palancaAnimator;
 
+    private byte _myDistractionId;
+
     private void Start()
     {
         GetComponent<MeshCollider>().enabled = false;
@@ -19,6 +21,11 @@ public class LightController : MonoBehaviour
         _light.intensity = 3.57f;
         palancaAnimator.SetTrigger("Trigger");
         GetComponent<MeshCollider>().enabled = false;
+        if (Tracker.Instance != null)
+        {
+            Tracker.Instance.TrackEvent(new DistractionDespawnedEvent(Tracker.Instance.getSessionId(), Tracker.Instance.getMatchId(), DistractionType.Light, gameObject));
+        }
+
     }
 
     public void TurnOff()
@@ -26,5 +33,10 @@ public class LightController : MonoBehaviour
         _light.intensity = 0.1f;
         palancaAnimator.SetTrigger("Trigger");
         GetComponent<MeshCollider>().enabled = true;
+
+        if (Tracker.Instance != null)
+        {
+            Tracker.Instance.TrackEvent(new DistractionSpawnedEvent(Tracker.Instance.getSessionId(), Tracker.Instance.getMatchId(), DistractionType.Light, gameObject));
+        }
     }
 }

@@ -11,6 +11,7 @@ public class Gatete : MonoBehaviour
 
     private Animator _animator;
 
+
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == 3)
@@ -39,6 +40,12 @@ public class Gatete : MonoBehaviour
         AudioClip enfadao = GameManager.Instance.gatoEnfadao[Random.Range(0, GameManager.Instance.bostezo.Length)];
 
         AudioSource.PlayClipAtPoint(enfadao, new Vector3(0, 0, 0));
+
+        if (Tracker.Instance != null)
+        {
+            Tracker.Instance.TrackEvent(new DistractionSpawnedEvent(Tracker.Instance.getSessionId(), Tracker.Instance.getMatchId(), DistractionType.Cat, gameObject));
+        }
+
         StartCoroutine(GoIn());
     }
 
@@ -78,7 +85,13 @@ public class Gatete : MonoBehaviour
         }
         _animator.SetBool("Moving", false);
         transform.eulerAngles = new Vector3(0, 180, 0);
-        GameManager.Instance.catActive = false;
+
+
+        if (Tracker.Instance != null)
+        {
+            Tracker.Instance.TrackEvent(new DistractionDespawnedEvent(Tracker.Instance.getSessionId(), Tracker.Instance.getMatchId(), DistractionType.Cat, gameObject));
+        }
+            GameManager.Instance.catActive = false;
         StopAllCoroutines();
     }
 

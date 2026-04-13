@@ -49,7 +49,11 @@ public class EventManager : MonoBehaviour
 
     private void MoscaEvent()
     {
-        Instantiate(_mosca, _flyTr);
+        GameObject moscaInstance = Instantiate(_mosca, _flyTr);
+        if (Tracker.Instance != null)
+        {
+            Tracker.Instance.TrackEvent(new DistractionSpawnedEvent(Tracker.Instance.getSessionId(), Tracker.Instance.getMatchId(), DistractionType.Fly, moscaInstance)); 
+        }
         Debug.Log("MOSCA");
     }
 
@@ -60,6 +64,8 @@ public class EventManager : MonoBehaviour
             Debug.Log("gato");
             GameManager.Instance.catActive = true;
             _gatito.GetComponent<Gatete>().Enter();
+
+
         }
         else
         {
@@ -72,6 +78,7 @@ public class EventManager : MonoBehaviour
         if (!GameManager.Instance.bossActive)
         {
             GameManager.Instance.bossActive = true;
+   
             RndInitialPoint();
         }
         else
@@ -83,6 +90,7 @@ public class EventManager : MonoBehaviour
     private void LuzEvent()
     {
         _luz.GetComponent<LightController>().TurnOff();
+
     }
 
     // Start is called before the first frame update
@@ -102,6 +110,11 @@ public class EventManager : MonoBehaviour
         _jefe1.SetActive(true);
         _jefe1.GetComponent<EventoJefe>().volviendo = false;
         _jefe1.GetComponent<EventoJefe>().tiempo = 0f;
+
+        if (Tracker.Instance != null)
+        {
+            Tracker.Instance.TrackEvent(new DistractionSpawnedEvent(Tracker.Instance.getSessionId(), Tracker.Instance.getMatchId(), DistractionType.Light, _jefe1));
+        }
     }
 
     private void ActiveJefe2()
@@ -109,6 +122,11 @@ public class EventManager : MonoBehaviour
         _jefe2.SetActive(true);
         _jefe2.GetComponent<EventoJefe2>().volviendo = false;
         _jefe2.GetComponent<EventoJefe2>().tiempo = 0f;
+
+        if (Tracker.Instance != null)
+        {
+            Tracker.Instance.TrackEvent(new DistractionSpawnedEvent(Tracker.Instance.getSessionId(), Tracker.Instance.getMatchId(), DistractionType.Light, _jefe2));
+        }
     }
 
     private void ActiveJefe3()
@@ -116,6 +134,11 @@ public class EventManager : MonoBehaviour
         _jefe3.SetActive(true);
         _jefe3.GetComponent<EventoJefe3>().volviendo = false;
         _jefe3.GetComponent<EventoJefe3>().tiempo = 0f;
+
+        if (Tracker.Instance != null)
+        {
+            Tracker.Instance.TrackEvent(new DistractionSpawnedEvent(Tracker.Instance.getSessionId(), Tracker.Instance.getMatchId(), DistractionType.Light, _jefe3));
+        }
     }
 
     private void GestionDialogJefe()

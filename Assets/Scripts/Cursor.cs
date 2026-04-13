@@ -58,6 +58,13 @@ public class Cursor : MonoBehaviour
                 _audioManager.KillFly();
                 Debug.Log("moscaaaaa");
                 _animator.Play("Subir");
+
+                GameObject mosca = obj.transform.parent.gameObject;
+                if (Tracker.Instance != null)
+                {
+                    Tracker.Instance.TrackEvent(new DistractionDespawnedEvent(Tracker.Instance.getSessionId(), Tracker.Instance.getMatchId(), DistractionType.Fly, mosca));
+                }
+
                 Destroy(obj.transform.parent.gameObject);
             }
             else if (obj.tag == "Lata" && !isMoving && !tieneLata)
