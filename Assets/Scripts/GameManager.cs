@@ -217,6 +217,9 @@ public class GameManager : MonoBehaviour
 
     public void drinkRedbull()
     {
+        if (Tracker.Instance != null)
+            Tracker.Instance.TrackEvent(new EnergyDrinkEvent(Tracker.Instance.getSessionId(), Tracker.Instance.getMatchId())); 
+
         _eventManager.GetComponent<TiredEvent>().restartCaffeine();
     }
 
