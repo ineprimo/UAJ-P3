@@ -110,7 +110,8 @@ public class GameManager : MonoBehaviour
     
     public void LoseLife()
     {
-        Tracker.Instance.TrackEvent(new LifeLostEvent(Tracker.Instance.getSessionId(), Tracker.Instance.getMatchId()));
+        if(Tracker.Instance != null)
+            Tracker.Instance.TrackEvent(new LifeLostEvent(Tracker.Instance.getSessionId(), Tracker.Instance.getMatchId()));
         
         Camera.main.GetComponent<Shake>().start = true;
         if (_lifes > 1)
@@ -127,7 +128,8 @@ public class GameManager : MonoBehaviour
     }
     public void PlayerDies()
     {
-        Tracker.Instance.TrackEvent(new TrackerEvent("match_end", Tracker.Instance.getSessionId(), Tracker.Instance.getMatchId()));
+        if(Tracker.Instance != null)
+            Tracker.Instance.TrackEvent(new TrackerEvent("match_end", Tracker.Instance.getSessionId(), Tracker.Instance.getMatchId()));
         SceneManager.LoadScene("QuechuScene");
     }
     public void ResetLifes()
