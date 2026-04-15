@@ -199,7 +199,7 @@ public class GameManager : MonoBehaviour
     public void AddPoints(int n)
     {
         _score += n;
-        Debug.Log("Current Score: " + _score);
+        //Debug.Log("Current Score: " + _score);
     }
 
     public void AddFlies(int n)
@@ -254,7 +254,7 @@ public class GameManager : MonoBehaviour
             if (canAcuraccy < 0.3f)
                 {
                     PlayerDies();
-                Debug.Log("cANaCURAZY: "+ canAcuraccy);
+                    //Debug.Log("cANaCURAZY: "+ canAcuraccy);
                 }
         }
        
