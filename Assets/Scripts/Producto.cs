@@ -8,6 +8,8 @@ public class Producto : MonoBehaviour
     [SerializeField] private bool _isUsed;
     [SerializeField] private int _color;
 
+    public bool hasBeenSuelo = false;
+
     public bool isCan()
     {
         return _isCan;

@@ -5,9 +5,7 @@ public enum CanType
 {
     Blue,
     Red,
-    Green,
-    Pink,
-    Cyan
+    Other
 }
 
 public class CanAppearanceEvent : TrackerEvent

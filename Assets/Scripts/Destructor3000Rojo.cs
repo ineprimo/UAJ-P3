@@ -2,18 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Destructor3000 : MonoBehaviour
+public class Destructor3000Rojo : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -22,6 +22,6 @@ public class Destructor3000 : MonoBehaviour
         Debug.Log("Destrcutor");
 
         if (Tracker.Instance != null)
-            Tracker.Instance.TrackEvent(new DunkCanEvent("can_landed", Tracker.Instance.getSessionId(), Tracker.Instance.getMatchId(), (CanType)other.GetComponent<Producto>().color(), TargetType.Bin));
+            Tracker.Instance.TrackEvent(new DunkCanEvent("can_landed", Tracker.Instance.getSessionId(), Tracker.Instance.getMatchId(), (CanType)other.GetComponent<Producto>().color(), TargetType.RedBin));
     }
 }

@@ -50,6 +50,8 @@ public class LataManager : MonoBehaviour
     {
         int colorRandom = Random.Range(0, maxRandom);
         //Debug.Log("Lata de color: " +  colorRandom + " " + maxRandom);
+
+        
         
         if(Tracker.Instance != null)
             Tracker.Instance.TrackEvent(new CanAppearanceEvent("can_appears", Tracker.Instance.getSessionId(), Tracker.Instance.getMatchId(), (CanType)colorRandom));
