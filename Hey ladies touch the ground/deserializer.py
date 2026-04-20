@@ -38,13 +38,13 @@ def processClicks(session_clicks, session_number):
     if not heatmap.empty:
         plt.figure(figsize=(10, 6))
         
-        bg_path = "background.png" 
+        bg_path = "background2.png" 
         if os.path.exists(bg_path):
             img = plt.imread(bg_path)
             height, width = img.shape[:2]
             plt.imshow(img, extent=[0, width, 0, height])
 
-        plt.hist2d(heatmap["x"], heatmap["y"], bins=50, cmap="hot", alpha=0.6, 
+        plt.hist2d(heatmap["x"], heatmap["y"], bins=50, cmap="spring", alpha=0.6, 
                     range=[[0, width], [0, height]], cmin=1)
         plt.colorbar(label="Densidad de clicks")
         plt.title(f"Mapa de Calor de Clicks - Sesión {session_number}")
