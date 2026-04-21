@@ -27,6 +27,7 @@ def analizar_telemetria_completa():
             parpadeos = {}
             clicks_count = {}
             inicio_partida = {}
+            vidas_perdidas = {}
 
             # lectura eventos
             for event in events:
@@ -43,6 +44,7 @@ def analizar_telemetria_completa():
                         bebidas[clave_partida] = []
                         parpadeos[clave_partida] = {"inicio": 0, "ciclos": [], "blinks_actuales": []}
                         clicks_count[clave_partida] = 0
+                        vidas_perdidas[clave_partida] = []
                     
                     t_event = event["eventType"]
                     ts = event["timestamp"]
@@ -113,6 +115,9 @@ def analizar_telemetria_completa():
                     elif t_event == "blink" and event.get("blinkState") == True:
                         parpadeos[clave_partida]["blinks_actuales"].append(ts)
 
+                    elif t_event == "life_lost":
+                        vidas_perdidas[clave_partida].append(ts)
+
 
             # Calculo M6
             df_reaccion = pd.DataFrame(tiempos_reaccion)
@@ -169,6 +174,18 @@ def analizar_telemetria_completa():
                 
                 # Clicks
                 print(f"   [Clicks] Total: {clicks_count[partida]}")
+
+                #Vidas Perdidas
+                total_vidas = len(vidas_perdidas[partida])
+                print(f"   [Vidas] Total perdidas: {total_vidas}")
+                if total_vidas > 0:
+                    t_inicio = inicio_partida.get(partida, 0)
+                    for i, ts_vida in enumerate(vidas_perdidas[partida]):
+                        t_transcurrido = (ts_vida - t_inicio) / 1000.0
+                        mins = int(t_transcurrido / 60)
+                        secs = t_transcurrido % 60
+                        print(f"      - Vida {i+1} perdida en el minuto {mins}:{secs:05.2f}")
+
                 print("\n")
 
     print("\n====================")
