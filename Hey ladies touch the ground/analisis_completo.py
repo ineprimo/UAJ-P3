@@ -1,13 +1,15 @@
 import json
 import os
 import pandas as pd
+import matplotlib.pyplot as plt
+
 
 folder_path = os.path.dirname(os.path.abspath(__file__))
 
 def analizar_telemetria_completa():
     print("\n====================")
     print("ANÁLISIS DE TELEMETRÍA")
-    print("\n====================")
+    print("====================")
 
     archivos_validos = 0
 
@@ -26,6 +28,7 @@ def analizar_telemetria_completa():
             bebidas = {}
             parpadeos = {}
             clicks_count = {}
+            session_clicks = []
             inicio_partida = {}
             vidas_perdidas = {}
 
@@ -34,7 +37,7 @@ def analizar_telemetria_completa():
                 if "matchId" in event and "sessionId" in event:
                     match_id = event["matchId"]
                     session_id = event["sessionId"]
-                    clave_partida = f"Sesión {session_id} | Partida {match_id}"
+                    clave_partida = f"Sesión {session_id} | Partida {match_id}\n"
                     
                     # DIccionarios en partida nueva
                     if clave_partida not in latas:
@@ -65,6 +68,7 @@ def analizar_telemetria_completa():
                     
                     elif t_event == "mouse_click":
                         clicks_count[clave_partida] += 1
+                        session_clicks.append((event["x"], event["y"]))
 
                     # M1: Latas Generadas
                     elif t_event == "can_appears":
@@ -151,8 +155,9 @@ def analizar_telemetria_completa():
                         tabla_reaccion['segundos'] = (pd.to_numeric(tabla_reaccion['timestamp_end']) - pd.to_numeric(tabla_reaccion['timestamp_start'])) / 1000.0
                         resumen_m6 = tabla_reaccion.groupby('clave_partida')['segundos'].mean().to_dict()
 
-            print(f"REPORTE DE ARCHIVO: {filename}")
             print("\n====================")
+            print(f"REPORTE DE ARCHIVO: {filename}")
+            print("====================\n")
 
             
             for partida in latas.keys():
@@ -228,9 +233,6 @@ def analizar_telemetria_completa():
                         print()
                 else:
                     print("      - No se registraron parpadeos ni uso de bebidas.\n")
-                
-                # Clicks
-                print(f"   [Clicks] Total: {clicks_count[partida]}\n")
 
                 #Vidas Perdidas
                 total_vidas = len(vidas_perdidas[partida])
@@ -241,12 +243,31 @@ def analizar_telemetria_completa():
                         t_transcurrido = (ts_vida - t_inicio) / 1000.0
                         mins = int(t_transcurrido / 60)
                         secs = t_transcurrido % 60
-                        print(f"      - Vida {i+1} perdida en el minuto {mins}:{secs:05.2f}")
+                        print(f"      - Vida {i+1} perdida en el minuto {mins}:{secs:05.2f}\n")
 
-                print("\n" + "="*50 + "\n")
+                # Clicks
+                print(f"   [Clicks] Total: {clicks_count[partida]}\n")
+            
+            # Mapa de calor de clicks
+            heatmap = pd.DataFrame(session_clicks, columns=["x", "y"])
+            if not heatmap.empty:
+                plt.figure(figsize=(10, 6))
+                
+                bg_path = "background2.png" 
+                if os.path.exists(bg_path):
+                    img = plt.imread(bg_path)
+                    height, width = img.shape[:2]
+                    plt.imshow(img, extent=[0, width, 0, height])
+
+                plt.hist2d(heatmap["x"], heatmap["y"], bins=50, cmap="spring", alpha=0.6, 
+                            range=[[0, width], [0, height]], cmin=1)
+                plt.colorbar(label="Densidad de clicks")
+                plt.title(f"Mapa de Calor de Clicks - Sesión {filename}")
+    plt.show()
 
     print("\n====================")
-
+    print("ANÁLISIS COMPLETADO")
+    print("====================")
 
 if __name__ == "__main__":
     analizar_telemetria_completa()
