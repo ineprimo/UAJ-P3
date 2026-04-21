@@ -40,7 +40,7 @@ def analizar_telemetria_completa():
                     if clave_partida not in latas:
                         latas[clave_partida] = 0
                         rendimiento[clave_partida] = {"aciertos": 0, "fallos": 0}
-                        distracciones[clave_partida] = {"tipos": {}, "aparecidas": 0, "quitadas": 0}
+                        distracciones[clave_partida] = {"tipos": {}, "aparecidas": 0, "quitadas": 0, "lista": []}
                         bebidas[clave_partida] = []
                         parpadeos[clave_partida] = {"inicio": 0, "ciclos": [], "blinks_actuales": []}
                         clicks_count[clave_partida] = 0
@@ -80,12 +80,20 @@ def analizar_telemetria_completa():
                     # M4 + M5 + M6: Distracciones
                     elif t_event == "distraction_spawned":
                         tipo_dist = event.get("distractionType", "Desconocida")
+                        dist_id = event.get("distractionId")
                         distracciones[clave_partida]["aparecidas"] += 1
                         
                         if tipo_dist not in distracciones[clave_partida]["tipos"]:
                             distracciones[clave_partida]["tipos"][tipo_dist] = 0
                         distracciones[clave_partida]["tipos"][tipo_dist] += 1
                         
+                        distracciones[clave_partida]["lista"].append({
+                            "accion": "Aparece",
+                            "tipo": tipo_dist,
+                            "id": dist_id,
+                            "ts": ts
+                        })
+
                         tiempos_reaccion.append({
                             "clave_partida": clave_partida,
                             "distractionId": event.get("distractionId"),
@@ -95,6 +103,16 @@ def analizar_telemetria_completa():
                         
                     elif t_event == "distraction_despawned":
                         distracciones[clave_partida]["quitadas"] += 1
+
+                        tipo_dist = event.get("distractionType", "Desconocida")
+                        dist_id = event.get("distractionId")
+                        distracciones[clave_partida]["lista"].append({
+                            "accion": "Desaparece",
+                            "tipo": tipo_dist,
+                            "id": dist_id,
+                            "ts": ts
+                        })
+
                         tiempos_reaccion.append({
                             "clave_partida": clave_partida,
                             "distractionId": event.get("distractionId"),
@@ -138,10 +156,16 @@ def analizar_telemetria_completa():
 
             
             for partida in latas.keys():
+
+
+                if partida not in inicio_partida and latas[partida] == 0 and clicks_count[partida] == 0:
+                    continue
+
                 print(f" {partida.upper()}")
+                t_inicio = inicio_partida.get(partida, 0)
                 
                 # M1
-                print(f"   [M1] Latas Generadas: {latas[partida]}")
+                print(f"   [M1] Latas Generadas: {latas[partida]}\n")
                 
                 # M2
                 aciertos = rendimiento[partida]["aciertos"]
@@ -150,30 +174,63 @@ def analizar_telemetria_completa():
                 if total_throws > 0:
                     tasa = (aciertos / total_throws) * 100
                     print(f"   [M2] Rendimiento: {tasa:.2f}% acierto ({aciertos} aciertos, {fallos} fallos)")
+                    print()
                 else:
-                    print("   [M2] Rendimiento: 0 lanzamientos")
+                    print("   [M2] Rendimiento: 0 lanzamientos\n")
                 
                 # M4 y M5
                 ap = distracciones[partida]["aparecidas"]
                 qu = distracciones[partida]["quitadas"]
                 if ap > 0:
                     pct = (qu / ap) * 100
-                    print(f"   [M4] Distracciones por tipo: {distracciones[partida]['tipos']}")
-                    print(f"   [M5] Distracciones resueltas: {pct:.2f}% ({qu}/{ap})")
+                    print(f"   [M4] Distracciones por tipo: {distracciones[partida]['tipos']}\n")
+                    print(f"   [M5] Distracciones resueltas: {pct:.2f}% ({qu}/{ap})\n")
+
+                    print("   [Distracciones]:")
+                    for d in distracciones[partida]["lista"]:
+                        t_transcurrido = (d["ts"] - t_inicio) / 1000.0
+                        mins = int(t_transcurrido / 60)
+                        secs = t_transcurrido % 60
+                        print(f"      - {d['accion']} {d['tipo']} (ID: {d['id']}) en el minuto {mins}:{secs:05.2f}")
+                        print()
                 else:
-                    print("   [M4/M5] Sin distracciones en esta partida.")
+                    print("   [M4/M5] Sin distracciones en esta partida.\n")
                     
                 # M6
                 if partida in resumen_m6:
-                    print(f"   [M6] Tiempo medio reacción: {resumen_m6[partida]:.2f} seg")
+                    print(f"   [M6] Tiempo medio reacción: {resumen_m6[partida]:.2f} seg\n")
                 else:
-                    print("   [M6] No se pudo calcular tiempo de reacción.")
+                    print("   [M6] No se pudo calcular tiempo de reacción.\n")
 
-                # Bebidas
-                print(f"   [Bebidas] Usadas: {len(bebidas[partida])}")
+                # Bebidas y parpadeos
+                print(f"   [Fatiga] Bebidas Energéticas usadas: {len(bebidas[partida])}")
+                ciclos_parpadeo = parpadeos[partida]["ciclos"]
+                if len(ciclos_parpadeo) > 0:
+                    #t_inicio = parpadeos[partida]["inicio"]
+                    for num_ciclo, ciclo in enumerate(ciclos_parpadeo):
+                        total_blinks = len(ciclo["blinks"])
+                        motivo = ciclo["fin_motivo"]
+                        
+                        fin_transcurrido = (ciclo["fin_ts"] - t_inicio) / 1000.0
+                        mins_f = int(fin_transcurrido / 60)
+                        secs_f = fin_transcurrido % 60
+                        
+                        print(f"      > Ciclo {num_ciclo + 1} (Terminó por {motivo} en {mins_f}:{secs_f:05.2f})")
+                        if total_blinks == 0:
+                            print("         => 0 parpadeos antes de terminar el ciclo.")
+                        else:
+                            print(f"         => {total_blinks} parpadeos previos:")
+                            for i, blink_ts in enumerate(ciclo["blinks"]):
+                                t_blink = (blink_ts - t_inicio) / 1000.0
+                                mins_b = int(t_blink / 60)
+                                secs_b = t_blink % 60
+                                print(f"            - Parpadeo {i+1} en el minuto {mins_b}:{secs_b:05.2f}")
+                        print()
+                else:
+                    print("      - No se registraron parpadeos ni uso de bebidas.\n")
                 
                 # Clicks
-                print(f"   [Clicks] Total: {clicks_count[partida]}")
+                print(f"   [Clicks] Total: {clicks_count[partida]}\n")
 
                 #Vidas Perdidas
                 total_vidas = len(vidas_perdidas[partida])
@@ -186,11 +243,10 @@ def analizar_telemetria_completa():
                         secs = t_transcurrido % 60
                         print(f"      - Vida {i+1} perdida en el minuto {mins}:{secs:05.2f}")
 
-                print("\n")
+                print("\n" + "="*50 + "\n")
 
     print("\n====================")
-    print("ANÁLISIS COMPLETADO")
-    print("\n====================")
+
 
 if __name__ == "__main__":
     analizar_telemetria_completa()
