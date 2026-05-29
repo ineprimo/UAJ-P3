@@ -1,4 +1,6 @@
 using shortid;
+using System;
+using Unity.VisualScripting;
 
 public class Tracker
 {
@@ -17,42 +19,56 @@ public class Tracker
     //yo diria que tiene sentido llevar la cuenta de cuantas partidas se han jugado en el tracker, pero si veis que mejor que sea en otro lado cambiadlo
     private byte matchId;
     private ShortIdOptions options;
-    
+
+    // evitar nullreferenceexceptions
+    private bool isInitialized = false;
+
     private Tracker()
     {
         matchId = 0;
         options = new ShortIdOptions();
     }
 
-    // inicializa sistema de telemetr�a
+    // inicializa sistema de telemetria
     public void Init()
     {
-        //pedimos un nuevo id de sesion
-        sessionId = getNewSessionId();
-        
-        //conectamos
-        ISerializer serializer = new JsonSerializer();
-        persistence = new FilePersistence(serializer, sessionId);
+        if (isInitialized) 
+            return;
+        try
+        {
+            //pedimos un nuevo id de sesion
+            sessionId = getNewSessionId();
 
-        //inicializamos ids de partida
-        matchId = 0;
+            //conectamos
+            ISerializer serializer = new JsonSerializer();
+            persistence = new FilePersistence(serializer, sessionId);
 
-        //evento start
-        TrackEvent(new TrackerEvent("session_start", sessionId, matchId));
+            //inicializamos ids de partida
+            matchId = 0;
+
+            //evento start
+            TrackEvent(new TrackerEvent("session_start", sessionId, matchId));
+        }
+        catch(System.Exception)
+        {
+            //Debug.LogError("Error initializing Tracker: " + e.Message);
+        }
     }
 
     // m�todo para llamar desde el juego
     public void TrackEvent(TrackerEvent e)
     {
-        //Debug.Log(e.eventType);
-        if (persistence != null)
+        if (!isInitialized || persistence == null) return;
+        try
         {
-            persistence.Send(e);
+            if (e.eventType == "match_end")
+                matchId++;
+        }
+        catch (System.Exception)
+        {
+            //Debug.LogError("Error tracking event: " + e.eventType + " - " + e.eventId + " - " + e.timestamp);
         }
 
-        //quizas esta un poco feo actualizar en que partida estas de esta forma? Si se os ocurre algo mejor cambiadlo
-        if (e.eventType == "match_end") 
-            matchId++;
     }
 
     //cuando se quiera lanzar un evento se pide el id de sesion al tracker para rellenar la info del evento
@@ -86,6 +102,7 @@ public class Tracker
         if (persistence != null)
         {
             persistence.Flush();
+            persistence.Close();
         }
     } 
 }
