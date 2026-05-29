@@ -172,12 +172,9 @@ Basándonos en la Métrica 6 (Tiempo medio de reacción) y cruzando con la M1, p
 
 
 #### **Pregunta 2**: "¿Qué tipos de distracciones generan mayor dispersión de clics?"
+Al cruzar la cantidad y tipo de distracciones (M4) con los mapas de calor (M3), observamos que partidas con alta presencia de las distracciones de "Mosca" y "Apagóon", generan clics mucho más dispersos por toda la pantalla. Por el contrario, cuando las distracciones son mínimas, el mapa de calor se concentra casi exclusivamente en la zona de la cinta y los contenedores
 
-// to do
-
-**Conclusión**: 
-
-// to do
+**Conclusión**: Se demuestra que ciertas distracciones hacen que el jugador tenga menos control sobre sus clics.
 
 
 ## 9. Instrumentalización
