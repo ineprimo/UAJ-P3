@@ -16,8 +16,6 @@ public class Tracker
 
     private IPersistence persistence;
     private string sessionId;
-    //yo diria que tiene sentido llevar la cuenta de cuantas partidas se han jugado en el tracker, pero si veis que mejor que sea en otro lado cambiadlo
-    private byte matchId;
     private ShortIdOptions options;
 
     // evitar nullreferenceexceptions
@@ -25,7 +23,6 @@ public class Tracker
 
     private Tracker()
     {
-        matchId = 0;
         options = new ShortIdOptions();
     }
 
@@ -42,9 +39,6 @@ public class Tracker
             //conectamos
             ISerializer serializer = new JsonSerializer();
             persistence = new FilePersistence(serializer, sessionId);
-
-            //inicializamos ids de partida
-            matchId = 0;
 
             // como se ha inicializado, setteamos la variable a true
             isInitialized = true;
@@ -69,9 +63,6 @@ public class Tracker
             Debug.Log("tracker event created, sending to persistance");
 
             persistence.Send(e);
-
-            if (e.eventType == "match_end")
-                matchId++;
         }
         catch (System.Exception)
         {
@@ -82,9 +73,6 @@ public class Tracker
 
     //cuando se quiera lanzar un evento se pide el id de sesion al tracker para rellenar la info del evento
     public string getSessionId() { return sessionId; }
-
-    //cuando se quiera lanzar un evento se pide el id de partida al tracker para rellenar la info del evento
-    public byte getMatchId() { return matchId; }
     
     //al iniciar la sesion generamos un id unico (si tuvieramos un servidor sustituiriamos la generacion del id por una request al servidor) 
     private string getNewSessionId()
@@ -103,9 +91,6 @@ public class Tracker
     // cuando el jugador cierre el juego
     public void TrackerQuit()
     {
-       
-
-
         // vaciamos y guardamos en archivo
         if (persistence != null)
         {

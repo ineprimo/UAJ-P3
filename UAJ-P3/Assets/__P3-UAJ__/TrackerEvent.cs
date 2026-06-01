@@ -8,7 +8,6 @@ public class TrackerEvent
     public long timestamp; // Tiempo
     public string eventId; // ID �nico de evento
     public string sessionId; // ID de la sesi�n de juego
-    public byte matchId; // ID de la partida en la sesion
 
     // Constructor base
     public TrackerEvent(string type, string session)
