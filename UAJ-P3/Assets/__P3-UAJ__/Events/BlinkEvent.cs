@@ -5,8 +5,8 @@ public class BlinkEvent : TrackerEvent
     // true si esta en la fase de parpadeo y false en el caso contrario 
     public bool blinkState;
 
-    public BlinkEvent(string session, byte matchId, bool state)
-        : base("blink", session, matchId)
+    public BlinkEvent(string session, bool state)
+        : base("blink", session)
     {
         blinkState = state;
     }

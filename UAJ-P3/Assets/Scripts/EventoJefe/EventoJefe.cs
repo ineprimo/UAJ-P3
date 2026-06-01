@@ -78,7 +78,7 @@ public class EventoJefe : MonoBehaviour
 
                 if (Tracker.Instance != null)
                 {
-                    Tracker.Instance.TrackEvent(new DistractionDespawnedEvent(Tracker.Instance.getSessionId(), Tracker.Instance.getMatchId(), DistractionType.Light, gameObject));
+                    Tracker.Instance.TrackEvent(new DistractionDespawnedEvent(Tracker.Instance.getSessionId(), DistractionType.Light, gameObject));
                 }
 
                 gameObject.SetActive(false);

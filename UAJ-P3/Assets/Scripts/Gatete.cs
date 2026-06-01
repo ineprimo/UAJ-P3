@@ -43,7 +43,7 @@ public class Gatete : MonoBehaviour
 
         if (Tracker.Instance != null)
         {
-            Tracker.Instance.TrackEvent(new DistractionSpawnedEvent(Tracker.Instance.getSessionId(), Tracker.Instance.getMatchId(), DistractionType.Cat, gameObject));
+            Tracker.Instance.TrackEvent(new DistractionSpawnedEvent(Tracker.Instance.getSessionId(), DistractionType.Cat, gameObject));
         }
 
         StartCoroutine(GoIn());
@@ -89,7 +89,7 @@ public class Gatete : MonoBehaviour
 
         if (Tracker.Instance != null)
         {
-            Tracker.Instance.TrackEvent(new DistractionDespawnedEvent(Tracker.Instance.getSessionId(), Tracker.Instance.getMatchId(), DistractionType.Cat, gameObject));
+            Tracker.Instance.TrackEvent(new DistractionDespawnedEvent(Tracker.Instance.getSessionId(), DistractionType.Cat, gameObject));
         }
             GameManager.Instance.catActive = false;
         StopAllCoroutines();

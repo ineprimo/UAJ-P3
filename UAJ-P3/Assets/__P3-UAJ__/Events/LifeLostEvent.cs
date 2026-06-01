@@ -4,7 +4,7 @@ using System;
 public class LifeLostEvent : TrackerEvent
 {
 
-    public LifeLostEvent(string session, byte matchId)
-        : base("life_lost", session, matchId)
+    public LifeLostEvent(string session)
+        : base("life_lost", session)
     {}
 }

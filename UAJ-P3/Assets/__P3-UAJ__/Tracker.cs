@@ -1,7 +1,7 @@
 using shortid;
 using System;
 using Unity.VisualScripting;
-
+using UnityEngine;
 public class Tracker
 {
     private static Tracker _instance = new Tracker();
@@ -47,7 +47,7 @@ public class Tracker
             matchId = 0;
 
             //evento start
-            TrackEvent(new TrackerEvent("session_start", sessionId, matchId));
+            TrackEvent(new TrackerEvent("session_start", sessionId));
         }
         catch(System.Exception)
         {
@@ -94,9 +94,8 @@ public class Tracker
     // cuando el jugador cierre el juego
     public void TrackerQuit()
     {
-        //Debug.Log("quitting");
+        
         //evento fin
-        TrackEvent(new TrackerEvent("session_end", sessionId, matchId));
 
         // vaciamos y guardamos en archivo
         if (persistence != null)

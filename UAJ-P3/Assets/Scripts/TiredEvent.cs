@@ -35,7 +35,7 @@ public class TiredEvent : MonoBehaviour
         AudioSource.PlayClipAtPoint(bostezo, new Vector3(0, 0, 0));
 
         if (Tracker.Instance != null)
-            Tracker.Instance.TrackEvent(new BlinkEvent(Tracker.Instance.getSessionId(), Tracker.Instance.getMatchId(), true));
+            Tracker.Instance.TrackEvent(new BlinkEvent(Tracker.Instance.getSessionId(), true));
 
         animator.SetBool("sleep", true);
         yield return new WaitForSeconds(delay);

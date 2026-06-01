@@ -48,7 +48,10 @@ public class FilePersistence : IPersistence
 
     public void Flush()
     {
+        Debug.Log("quitting " + queue.Count);
+
         if (queue.Count == 0 || writer == null) return;
+
 
         //Debug.Log("Escribiendo en: " + this.filePath);
         // Abrimos el archivo y mientras tengamos la cola con cosas las vamos a�adiendo
@@ -56,6 +59,7 @@ public class FilePersistence : IPersistence
         {
             while (queue.Count > 0)
             {
+                Debug.Log("Escribiendo en: " + this.filePath);
                 writer.WriteLine(queue.Dequeue());
             }
             writer.Flush();

@@ -19,8 +19,8 @@ public abstract class DistractionEvent : TrackerEvent
     public string distractionType;
     public byte distractionId;
 
-    public DistractionEvent(string type, string session, byte match, DistractionType distType, GameObject obj, bool isSpawn)
-        : base(type, session, match)
+    public DistractionEvent(string type, string session, DistractionType distType, GameObject obj, bool isSpawn)
+        : base(type, session)
     {
         this.distractionType = distType.ToString();
 

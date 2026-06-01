@@ -22,7 +22,7 @@ public class SueloDetector : MonoBehaviour
             Debug.Log("Can landed on the floor");
             other.GetComponent<Producto>().hasBeenSuelo = true;
             if (Tracker.Instance != null)
-                Tracker.Instance.TrackEvent(new DunkCanEvent("can_landed", Tracker.Instance.getSessionId(), Tracker.Instance.getMatchId(), (CanType)other.GetComponent<Producto>().color(), TargetType.Floor));
+                Tracker.Instance.TrackEvent(new DunkCanEvent("can_landed", Tracker.Instance.getSessionId(), (CanType)other.GetComponent<Producto>().color(), TargetType.Floor));
         }
     }
 }

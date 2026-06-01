@@ -111,7 +111,7 @@ public class GameManager : MonoBehaviour
     public void LoseLife()
     {
         if(Tracker.Instance != null)
-            Tracker.Instance.TrackEvent(new LifeLostEvent(Tracker.Instance.getSessionId(), Tracker.Instance.getMatchId()));
+            Tracker.Instance.TrackEvent(new LifeLostEvent(Tracker.Instance.getSessionId()));
         
         Camera.main.GetComponent<Shake>().start = true;
         if (_lifes > 1)
@@ -128,8 +128,10 @@ public class GameManager : MonoBehaviour
     }
     public void PlayerDies()
     {
+        // acaba el match
         if(Tracker.Instance != null)
-            Tracker.Instance.TrackEvent(new TrackerEvent("match_end", Tracker.Instance.getSessionId(), Tracker.Instance.getMatchId()));
+            Tracker.Instance.TrackEvent(new TrackerEvent("match_end", Tracker.Instance.getSessionId()));
+
         SceneManager.LoadScene("QuechuScene");
     }
     public void ResetLifes()
@@ -220,7 +222,7 @@ public class GameManager : MonoBehaviour
     public void drinkRedbull()
     {
         if (Tracker.Instance != null)
-            Tracker.Instance.TrackEvent(new EnergyDrinkEvent(Tracker.Instance.getSessionId(), Tracker.Instance.getMatchId())); 
+            Tracker.Instance.TrackEvent(new EnergyDrinkEvent(Tracker.Instance.getSessionId())); 
 
         _eventManager.GetComponent<TiredEvent>().restartCaffeine();
     }
@@ -238,6 +240,9 @@ public class GameManager : MonoBehaviour
         ResetLifes();
         ResetScore();
         ResetFlies();
+
+        if (Tracker.Instance != null)
+            Tracker.Instance.TrackEvent(new TrackerEvent("sessionStart", Tracker.Instance.getSessionId()));
     }
 
     // Update is called once per frame

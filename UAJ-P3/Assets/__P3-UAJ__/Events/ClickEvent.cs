@@ -8,7 +8,7 @@ public class ClickEvent : TrackerEvent
     public float x;
     public float y;
     
-    public ClickEvent(string type, string session, byte matchId, Vector2 p) : base(type, session, matchId)
+    public ClickEvent(string type, string session, Vector2 p) : base(type, session)
     {
         x = p.X;
         y = p.Y;

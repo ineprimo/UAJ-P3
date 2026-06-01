@@ -39,7 +39,10 @@ public class MenuManager : MonoBehaviour
     public void LoadPlayState()
     {
         _hide = true;
-        Tracker.Instance.TrackEvent(new TrackerEvent("match_start", Tracker.Instance.getSessionId(), Tracker.Instance.getMatchId()));
+
+        // comienza un match nuevo
+        if (Tracker.Instance != null)
+            Tracker.Instance.TrackEvent(new TrackerEvent("match_start", Tracker.Instance.getSessionId()));
         StartCoroutine(Fade());        
     }
 
@@ -62,6 +65,10 @@ public class MenuManager : MonoBehaviour
 
     public void LoadExitApplication()
     {
+        // se acaba la sesion
+        if (Tracker.Instance != null)
+            Tracker.Instance.TrackEvent(new TrackerEvent("sessionEnd", Tracker.Instance.getSessionId()));
+
         Application.Quit();
     }
 }
