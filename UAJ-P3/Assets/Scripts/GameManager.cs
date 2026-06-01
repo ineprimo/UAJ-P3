@@ -133,7 +133,7 @@ public class GameManager : MonoBehaviour
     {
         // acaba el match
         if(Tracker.Instance != null)
-            Tracker.Instance.TrackEvent(new TrackerEvent("match_end", Tracker.Instance.getSessionId()));
+            Tracker.Instance.TrackEvent(new MatchEnd(Tracker.Instance.getSessionId()));
 
         SceneManager.LoadScene("QuechuScene");
     }

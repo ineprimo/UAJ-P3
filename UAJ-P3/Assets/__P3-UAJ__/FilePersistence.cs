@@ -48,8 +48,6 @@ public class FilePersistence : IPersistence
 
     public void Flush()
     {
-        Debug.Log("quitting " + queue.Count);
-
         if (queue.Count == 0 || writer == null) return;
 
 
