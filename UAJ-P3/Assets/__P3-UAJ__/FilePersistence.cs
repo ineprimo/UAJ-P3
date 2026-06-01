@@ -5,7 +5,7 @@ using UnityEngine;
 public class FilePersistence : IPersistence
 {
     private ISerializer serializer;
-    private Queue<string> queue; //eventos
+    private Queue<TrackerEvent> queue; //eventos
     private string filePath;
 
     private StreamWriter writer;
@@ -15,7 +15,7 @@ public class FilePersistence : IPersistence
     public FilePersistence(ISerializer serializer, string sessionId)
     {
         this.serializer = serializer;
-        this.queue = new Queue<string>();
+        this.queue = new Queue<TrackerEvent>();
 
         // Application.persistentDataPath --> aqui es donde unity guarda las cosas
         this.filePath = Path.Combine(Application.persistentDataPath, "telemetria_sesion_" + sessionId + ".json");
@@ -41,24 +41,26 @@ public class FilePersistence : IPersistence
             Debug.LogWarning("[FilePersistence] Cola llena. Descartando evento antiguo.");
         }
 
-        // Convertimos el evento en texto y lo aniadimos
-        string data = serializer.Serialize(trackerEvent);
-        queue.Enqueue(data);
+        // lo dejamos sin serializar
+        queue.Enqueue(trackerEvent);
     }
 
     public void Flush()
     {
         if (queue.Count == 0 || writer == null) return;
 
-
-        //Debug.Log("Escribiendo en: " + this.filePath);
         // Abrimos el archivo y mientras tengamos la cola con cosas las vamos a�adiendo
         try
         {
             while (queue.Count > 0)
             {
-                Debug.Log("Escribiendo en: " + this.filePath);
-                writer.WriteLine(queue.Dequeue());
+                //Debug.Log("Escribiendo en: " + this.filePath);
+
+                // serializamos los datos
+                string data = serializer.Serialize(queue.Dequeue());
+                
+                // escribimos los datos
+                writer.WriteLine(data);
             }
             writer.Flush();
         }
