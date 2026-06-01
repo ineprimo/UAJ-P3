@@ -242,7 +242,7 @@ public class GameManager : MonoBehaviour
         ResetFlies();
 
         if (Tracker.Instance != null)
-            Tracker.Instance.TrackEvent(new TrackerEvent("sessionStart", Tracker.Instance.getSessionId()));
+            Tracker.Instance.TrackEvent(new TrackerEvent("session_start", Tracker.Instance.getSessionId()));
     }
 
     // Update is called once per frame

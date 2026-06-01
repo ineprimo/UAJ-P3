@@ -46,8 +46,11 @@ public class Tracker
             //inicializamos ids de partida
             matchId = 0;
 
+            // como se ha inicializado, setteamos la variable a true
+            isInitialized = true;
+
             //evento start
-            TrackEvent(new TrackerEvent("session_start", sessionId));
+            //TrackEvent(new TrackerEvent("session_start", sessionId));
         }
         catch(System.Exception)
         {
@@ -58,9 +61,15 @@ public class Tracker
     // m�todo para llamar desde el juego
     public void TrackEvent(TrackerEvent e)
     {
+        Debug.Log("is Initialized " + isInitialized);
+
         if (!isInitialized || persistence == null) return;
         try
         {
+            Debug.Log("tracker event created, sending to persistance");
+
+            persistence.Send(e);
+
             if (e.eventType == "match_end")
                 matchId++;
         }
