@@ -103,6 +103,9 @@ public class GameManager : MonoBehaviour
         else Destroy(this);
         startTime = Time.time;
         DontDestroyOnLoad(this);
+
+
+
     }
 
 
@@ -240,9 +243,6 @@ public class GameManager : MonoBehaviour
         ResetLifes();
         ResetScore();
         ResetFlies();
-
-        if (Tracker.Instance != null)
-            Tracker.Instance.TrackEvent(new TrackerEvent("session_start", Tracker.Instance.getSessionId()));
     }
 
     // Update is called once per frame
@@ -264,5 +264,7 @@ public class GameManager : MonoBehaviour
         }
        
     }
+
+  
 
 }

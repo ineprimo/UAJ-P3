@@ -27,6 +27,10 @@ public class TrackerConfigurator : MonoBehaviour
     }
     void OnApplicationQuit()
     {
+        // se acaba la sesion
+        if (Tracker.Instance != null)
+            Tracker.Instance.TrackEvent(new SessionEnd(Tracker.Instance.getSessionId()));
+
         tracker.TrackerQuit();
     }
 

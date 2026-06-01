@@ -49,8 +49,8 @@ public class Tracker
             // como se ha inicializado, setteamos la variable a true
             isInitialized = true;
 
-            //evento start
-            //TrackEvent(new TrackerEvent("session_start", sessionId));
+            // comienza la sesion
+            TrackEvent(new SessionStart(Tracker.Instance.getSessionId()));
         }
         catch(System.Exception)
         {
@@ -103,8 +103,8 @@ public class Tracker
     // cuando el jugador cierre el juego
     public void TrackerQuit()
     {
-        
-        //evento fin
+       
+
 
         // vaciamos y guardamos en archivo
         if (persistence != null)

@@ -17,6 +17,8 @@ public class MenuManager : MonoBehaviour
     void Start()
     {
         _hided = new Vector3(transform.position.x, transform.position.y + 1000f, transform.position.z);
+
+
     }
 
     // Update is called once per frame
@@ -65,10 +67,7 @@ public class MenuManager : MonoBehaviour
 
     public void LoadExitApplication()
     {
-        // se acaba la sesion
-        if (Tracker.Instance != null)
-            Tracker.Instance.TrackEvent(new TrackerEvent("sessionEnd", Tracker.Instance.getSessionId()));
-
         Application.Quit();
     }
+
 }
