@@ -10,7 +10,13 @@ folder_path = os.path.dirname(os.path.abspath(__file__))
 # gestiona el spawn de las distracciones
 def distraction_spawned(event, distracciones, clave_partida, tiempos_reaccion, ts):
     tipo_dist = event.get("distractionType", "Desconocida")
-    dist_id = event.get("distractionId")
+    raw_id = event.get("distractionId") # El ID feo de Unity
+
+    #conversion de ID de unity a uno mas legible
+    seq_id = distracciones[clave_partida]["contador_ids"]
+    distracciones[clave_partida]["mapa_activos"][raw_id] = seq_id
+    distracciones[clave_partida]["contador_ids"] += 1
+
     distracciones[clave_partida]["aparecidas"] += 1
     
     if tipo_dist not in distracciones[clave_partida]["tipos"]:
@@ -20,32 +26,35 @@ def distraction_spawned(event, distracciones, clave_partida, tiempos_reaccion, t
     distracciones[clave_partida]["lista"].append({
         "accion": "Aparece",
         "tipo": tipo_dist,
-        "id": dist_id,
+        "id": seq_id,
         "ts": ts
     })
 
     tiempos_reaccion.append({
         "clave_partida": clave_partida,
-        "distractionId": event.get("distractionId"),
+        "distractionId": seq_id, 
         "timestamp": ts,
         "type": "spawn"
     })
 
 # gestiona el despawn de las distracciones
 def distraction_despawned(event, distracciones, clave_partida, tiempos_reaccion, ts):
-    distracciones[clave_partida]["quitadas"] += 1
     tipo_dist = event.get("distractionType", "Desconocida")
-    dist_id = event.get("distractionId")
+    raw_id = event.get("distractionId")
+    
+    seq_id = distracciones[clave_partida]["mapa_activos"].get(raw_id, raw_id)
+
+    distracciones[clave_partida]["quitadas"] += 1
     distracciones[clave_partida]["lista"].append({
         "accion": "Desaparece",
         "tipo": tipo_dist,
-        "id": dist_id,
+        "id": seq_id,
         "ts": ts
     })
 
     tiempos_reaccion.append({
         "clave_partida": clave_partida,
-        "distractionId": event.get("distractionId"),
+        "distractionId": seq_id, 
         "timestamp": ts,
         "type": "despawn"
     })
@@ -71,8 +80,7 @@ def match_end(parpadeos, clave_partida, ts):
         parpadeos[clave_partida]["blinks_actuales"] = []
 
 # gestiona el tiempo de reaccion
-def reaction_time(tiempos_reaccion, df_reaccion, resumen_m6):
-
+def reaction_time(df_reaccion, resumen_m6):
     if not df_reaccion.empty and 'type' in df_reaccion.columns and 'timestamp' in df_reaccion.columns:
         spawn = df_reaccion[df_reaccion['type'] == 'spawn'][['clave_partida', 'distractionId', 'timestamp']]
         despawn = df_reaccion[df_reaccion['type'] == 'despawn'][['clave_partida', 'distractionId', 'timestamp']]
@@ -231,7 +239,14 @@ def analizar_telemetria_completa():
                     if clave_partida not in latas:
                         latas[clave_partida] = 0
                         rendimiento[clave_partida] = {"aciertos": 0, "fallos": 0}
-                        distracciones[clave_partida] = {"tipos": {}, "aparecidas": 0, "quitadas": 0, "lista": []}
+                        distracciones[clave_partida] = {
+                            "tipos": {}, 
+                            "aparecidas": 0, 
+                            "quitadas": 0, 
+                            "lista": [],
+                            "mapa_activos": {}, 
+                            "contador_ids": 1  
+                        }
                         bebidas[clave_partida] = []
                         parpadeos[clave_partida] = {"inicio": 0, "ciclos": [], "blinks_actuales": []}
                         clicks_count[clave_partida] = 0
@@ -285,7 +300,7 @@ def analizar_telemetria_completa():
             # Calculo M6
             df_reaccion = pd.DataFrame(tiempos_reaccion)
             resumen_m6 = {}
-            reaction_time(tiempos_reaccion, df_reaccion, resumen_m6)
+            reaction_time(df_reaccion, resumen_m6)
 
             # finaliza el analisis
             print("\n====================")
