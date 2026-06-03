@@ -52,7 +52,7 @@ public class EventManager : MonoBehaviour
         GameObject moscaInstance = Instantiate(_mosca, _flyTr);
         if (Tracker.Instance != null)
         {
-            Tracker.Instance.TrackEvent(new DistractionSpawnedEvent(Tracker.Instance.getSessionId(), DistractionType.Fly, moscaInstance)); 
+            Tracker.Instance.TrackEvent(new DistractionSpawnedEvent(Tracker.Instance.getSessionId(), DistractionType.Fly, moscaInstance.GetInstanceID()));
         }
         Debug.Log("MOSCA");
     }
@@ -113,7 +113,7 @@ public class EventManager : MonoBehaviour
 
         if (Tracker.Instance != null)
         {
-            Tracker.Instance.TrackEvent(new DistractionSpawnedEvent(Tracker.Instance.getSessionId(), DistractionType.Light, _jefe1));
+            Tracker.Instance.TrackEvent(new DistractionSpawnedEvent(Tracker.Instance.getSessionId(), DistractionType.Coworkers, _jefe1.GetInstanceID()));
         }
     }
 
@@ -125,7 +125,7 @@ public class EventManager : MonoBehaviour
 
         if (Tracker.Instance != null)
         {
-            Tracker.Instance.TrackEvent(new DistractionSpawnedEvent(Tracker.Instance.getSessionId(), DistractionType.Light, _jefe2));
+            Tracker.Instance.TrackEvent(new DistractionSpawnedEvent(Tracker.Instance.getSessionId(), DistractionType.Coworkers, _jefe2.GetInstanceID()));
         }
     }
 
@@ -137,7 +137,7 @@ public class EventManager : MonoBehaviour
 
         if (Tracker.Instance != null)
         {
-            Tracker.Instance.TrackEvent(new DistractionSpawnedEvent(Tracker.Instance.getSessionId(), DistractionType.Light, _jefe3));
+            Tracker.Instance.TrackEvent(new DistractionSpawnedEvent(Tracker.Instance.getSessionId(), DistractionType.Coworkers, _jefe3.GetInstanceID()));
         }
     }
 

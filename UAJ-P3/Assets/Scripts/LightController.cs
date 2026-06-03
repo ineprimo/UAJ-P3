@@ -23,7 +23,7 @@ public class LightController : MonoBehaviour
         GetComponent<MeshCollider>().enabled = false;
         if (Tracker.Instance != null)
         {
-            Tracker.Instance.TrackEvent(new DistractionDespawnedEvent(Tracker.Instance.getSessionId(), DistractionType.Light, gameObject));
+            Tracker.Instance.TrackEvent(new DistractionDespawnedEvent(Tracker.Instance.getSessionId(), DistractionType.Light, gameObject.GetInstanceID()));
         }
 
     }
@@ -36,7 +36,7 @@ public class LightController : MonoBehaviour
 
         if (Tracker.Instance != null)
         {
-            Tracker.Instance.TrackEvent(new DistractionSpawnedEvent(Tracker.Instance.getSessionId(), DistractionType.Light, gameObject));
+            Tracker.Instance.TrackEvent(new DistractionSpawnedEvent( Tracker.Instance.getSessionId(), DistractionType.Light, gameObject.GetInstanceID()));
         }
     }
 }

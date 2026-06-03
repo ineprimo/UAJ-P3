@@ -63,7 +63,7 @@ public class Cursor : MonoBehaviour
                 GameObject mosca = obj.transform.parent.gameObject;
                 if (Tracker.Instance != null)
                 {
-                    Tracker.Instance.TrackEvent(new DistractionDespawnedEvent(Tracker.Instance.getSessionId(), DistractionType.Fly, mosca));
+                    Tracker.Instance.TrackEvent(new DistractionDespawnedEvent(Tracker.Instance.getSessionId(), DistractionType.Fly, mosca.GetInstanceID()));
                 }
 
                 Destroy(obj.transform.parent.gameObject);
