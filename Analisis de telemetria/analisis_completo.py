@@ -81,7 +81,7 @@ def reaction_time(tiempos_reaccion, df_reaccion, resumen_m6):
             tabla_reaccion = pd.merge(spawn, despawn, on=['clave_partida', 'distractionId'], suffixes=('_start', '_end'))
             if not tabla_reaccion.empty:
                 tabla_reaccion['segundos'] = (pd.to_numeric(tabla_reaccion['timestamp_end']) - pd.to_numeric(tabla_reaccion['timestamp_start'])) / 1000.0
-                resumen_m6 = tabla_reaccion.groupby('clave_partida')['segundos'].mean().to_dict()
+                resumen_m6.update(tabla_reaccion.groupby('clave_partida')['segundos'].mean().to_dict())
 
 
 ## metodos para escribir cada metrica
@@ -206,11 +206,25 @@ def analizar_telemetria_completa():
             inicio_partida = {}
             vidas_perdidas = {}
 
+            #calculamos las partidas aqui y no en el tracker
+            current_match_id = -1
+            partidas_iniciadas = 0
+
             # lectura eventos
             for event in events:
-                if "matchId" in event and "sessionId" in event:
-                    match_id = event["matchId"]
+                if "sessionId" in event:
                     session_id = event["sessionId"]
+                    
+                    #si detecta match_start incrementa el contador de partidas
+                    if event["eventType"] == "match_start":
+                        current_match_id = partidas_iniciadas
+                        partidas_iniciadas += 1
+
+                    #si el evento esta fuera de una partida (session_start) lo ignoramos
+                    if current_match_id == -1:
+                        continue
+
+                    match_id = current_match_id
                     clave_partida = f"Sesión {session_id} | Partida {match_id}\n"
                     
                     # DIccionarios en partida nueva
@@ -233,6 +247,7 @@ def analizar_telemetria_completa():
 
                     elif t_event == "match_end":
                         match_end(parpadeos, clave_partida, ts)
+                        current_match_id = -1
                     
                     elif t_event == "mouse_click":
                         clicks_count[clave_partida] += 1
