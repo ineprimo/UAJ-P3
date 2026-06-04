@@ -187,6 +187,19 @@ def heatmap(session_clicks, filename):
         plt.colorbar(label="Densidad de clicks")
         plt.title(f"Mapa de Calor de Clicks - Sesión {filename}")
 
+        # Creamos la carpeta "heatmaps" si no existe
+        target_folder = os.path.join(folder_path, "heatmaps")
+        os.makedirs(target_folder, exist_ok=True)
+
+        # Ruta de guardado
+        output_filename = filename.replace(".json", "_heatmap.png")
+        output_path = os.path.join(target_folder, output_filename)
+
+        # Guardamos y cerramos la gráfica actual
+        plt.savefig(output_path, bbox_inches='tight')
+        plt.close()
+        print(f"   [Mapeo] Mapa de calor guardado automáticamente en: {output_filename}\n")
+
 
 def analizar_telemetria_completa():
     print("\n====================")
@@ -339,8 +352,6 @@ def analizar_telemetria_completa():
             
             # Mapa de calor de clicks
             heatmap(session_clicks, filename)
-            
-    plt.show()
 
     print("\n====================")
     print("ANÁLISIS COMPLETADO")

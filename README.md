@@ -15,7 +15,7 @@
 * [8. Análisis y métricas](#8-análisis-y-métricas)
     * [8.1 Instrucciones de Reproducción](#81-instrucciones-de-reproducción)
     * [8.2 Análisis de Hipótesis y Preguntas de Investigación](#82-análisis-de-hipótesis-y-preguntas-de-investigación)
-* [9. Instrumentalización](#7-instrumentalización)
+* [9. Instrumentalización](#9-instrumentalización)
 
 ## 1. Introducción
 
@@ -145,7 +145,7 @@ La siguiente tabla muestra la relación entre las hipótesis y preguntas plantea
 
 Para garantizar la reproducibilidad y automatización de este análisis, se ha desarrollado un script en Python (analisis_completo.py). 
 * **Requisitos**: Tener instalado Python 3, la librería Pandas (pip install pandas) y la librería Matplot (pip install matplotlib).
-* **Ejecución**: En la carpeta ya están los jsons con las sesiones usadas para este análisis, con lo que para reproducirlo solo es necesario ejecutar el comando **_python analisis_completo.py_** desde su carpeta (**_\Analisis de telemetria_** en la raíz del repositorio). En caso de querer usar sesiones nuevas basta con alojar los archivos _.json_ de telemetría en la misma carpeta que el script (**_\Analisis de telemetria_**). Los _.json_ se generan en la dirección \AppData\LocalLow\DefaultCompany\AliEstrés\. El sistema procesará automáticamente todas las trazas y mostrará el cálculo de las métricas M1 a M6 por consola sin requerir intervención manual.
+* **Ejecución**: En la carpeta ya están los jsons con las sesiones usadas para este análisis, con lo que para reproducirlo solo es necesario ejecutar el comando **_python analisis_completo.py_** desde su carpeta (**_\Analisis de telemetria_** en la raíz del repositorio). En caso de querer usar sesiones nuevas basta con alojar los archivos _.json_ de telemetría en la misma carpeta que el script (**_\Analisis de telemetria_**). Los _.json_ se generan en la dirección \AppData\LocalLow\DefaultCompany\AliEstrés\. El sistema procesará automáticamente todas las trazas y mostrará el cálculo de las métricas M1 a M6 por consola sin requerir intervención manual, los heatmaps de las sesiones están guardados en la carpeta **_\Analisis de telemetria\heatmaps_**
 
 ### 8.2 Análisis de Hipótesis y Preguntas de Investigación
 
