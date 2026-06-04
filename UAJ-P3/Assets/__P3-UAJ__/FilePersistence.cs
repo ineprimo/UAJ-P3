@@ -5,7 +5,7 @@ using UnityEngine;
 public class FilePersistence : IPersistence
 {
     private ISerializer serializer;
-    private Queue<TrackerEvent> queue; //eventos
+    private CircularQueue<TrackerEvent> queue; //eventos
     private string filePath;
 
     private StreamWriter writer;
@@ -15,7 +15,7 @@ public class FilePersistence : IPersistence
     public FilePersistence(ISerializer serializer, string sessionId)
     {
         this.serializer = serializer;
-        this.queue = new Queue<TrackerEvent>();
+        this.queue = new CircularQueue<TrackerEvent>(maxQueueCapacity);
 
         // Application.persistentDataPath --> aqui es donde unity guarda las cosas
         this.filePath = Path.Combine(Application.persistentDataPath, "telemetria_sesion_" + sessionId + ".json");
