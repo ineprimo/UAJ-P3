@@ -46,7 +46,7 @@ public class Cursor : MonoBehaviour
         {
             //Debug.Log("Raycast: " + _hit.transform.gameObject);
             if(Tracker.Instance != null)
-                Tracker.Instance.TrackEvent(new ClickEvent("mouse_click",Tracker.Instance.getSessionId(), new System.Numerics.Vector2(Input.mousePosition.x, Input.mousePosition.y)));
+                Tracker.Instance.TrackEvent(new ClickEvent("mouse_click", new System.Numerics.Vector2(Input.mousePosition.x, Input.mousePosition.y)));
             
             GameObject obj = _hit.transform.gameObject;
 
@@ -63,7 +63,7 @@ public class Cursor : MonoBehaviour
                 GameObject mosca = obj.transform.parent.gameObject;
                 if (Tracker.Instance != null)
                 {
-                    Tracker.Instance.TrackEvent(new DistractionDespawnedEvent(Tracker.Instance.getSessionId(), DistractionType.Fly, mosca.GetInstanceID()));
+                    Tracker.Instance.TrackEvent(new DistractionDespawnedEvent(DistractionType.Fly, mosca.GetInstanceID()));
                 }
 
                 Destroy(obj.transform.parent.gameObject);

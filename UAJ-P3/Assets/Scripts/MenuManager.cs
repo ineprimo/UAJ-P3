@@ -44,7 +44,7 @@ public class MenuManager : MonoBehaviour
 
         // comienza un match nuevo
         if (Tracker.Instance != null)
-            Tracker.Instance.TrackEvent(new MatchStart(Tracker.Instance.getSessionId()));
+            Tracker.Instance.TrackEvent(new MatchStart());
 
         StartCoroutine(Fade());        
     }

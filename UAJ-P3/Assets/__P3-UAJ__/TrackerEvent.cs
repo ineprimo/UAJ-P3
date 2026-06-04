@@ -10,10 +10,10 @@ public class TrackerEvent
     public string sessionId; // ID de la sesi�n de juego
 
     // Constructor base
-    public TrackerEvent(string type, string session)
+    public TrackerEvent(string type)
     {
         this.eventType = type;
-        this.sessionId = session;
+        this.sessionId = null;
 
         // Generamos el timestamp actual
         this.timestamp = ((DateTimeOffset)DateTime.UtcNow).ToUnixTimeMilliseconds();

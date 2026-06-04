@@ -16,8 +16,8 @@ public abstract class DistractionEvent : TrackerEvent
     public string distractionType;
     public int distractionId;
 
-    public DistractionEvent(string type, string session, DistractionType distType, int instanceId)
-         : base(type, session)
+    public DistractionEvent(string type, DistractionType distType, int instanceId)
+         : base(type)
     {
         this.distractionType = distType.ToString();
         this.distractionId = instanceId;

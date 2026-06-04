@@ -54,7 +54,7 @@ public class LataManager : MonoBehaviour
         
         
         if(Tracker.Instance != null)
-            Tracker.Instance.TrackEvent(new CanAppearanceEvent("can_appears", Tracker.Instance.getSessionId(), (CanType)colorRandom));
+            Tracker.Instance.TrackEvent(new CanAppearanceEvent("can_appears", (CanType)colorRandom));
         
         Instantiate(_lata[colorRandom], _tr).transform.position = new Vector3(_tr.position.x, _tr.position.y, _tr.position.z + _randomizer);
         

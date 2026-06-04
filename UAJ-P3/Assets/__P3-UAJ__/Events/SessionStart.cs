@@ -2,8 +2,8 @@ using System;
 
 public class SessionStart : TrackerEvent
 {
-    public SessionStart(string session)
-        : base("session_start", session)
+    public SessionStart()
+        : base("session_start")
     {
     }
 }

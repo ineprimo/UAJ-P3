@@ -29,7 +29,7 @@ public class TrackerConfigurator : MonoBehaviour
     {
         // se acaba la sesion
         if (Tracker.Instance != null)
-            Tracker.Instance.TrackEvent(new SessionEnd(Tracker.Instance.getSessionId()));
+            Tracker.Instance.TrackEvent(new SessionEnd());
 
         tracker.TrackerQuit();
     }

@@ -114,7 +114,7 @@ public class GameManager : MonoBehaviour
     public void LoseLife()
     {
         if(Tracker.Instance != null)
-            Tracker.Instance.TrackEvent(new LifeLostEvent(Tracker.Instance.getSessionId()));
+            Tracker.Instance.TrackEvent(new LifeLostEvent());
         
         Camera.main.GetComponent<Shake>().start = true;
         if (_lifes > 1)
@@ -133,7 +133,7 @@ public class GameManager : MonoBehaviour
     {
         // acaba el match
         if(Tracker.Instance != null)
-            Tracker.Instance.TrackEvent(new MatchEnd(Tracker.Instance.getSessionId()));
+            Tracker.Instance.TrackEvent(new MatchEnd());
 
         SceneManager.LoadScene("QuechuScene");
     }
@@ -225,7 +225,7 @@ public class GameManager : MonoBehaviour
     public void drinkRedbull()
     {
         if (Tracker.Instance != null)
-            Tracker.Instance.TrackEvent(new EnergyDrinkEvent(Tracker.Instance.getSessionId())); 
+            Tracker.Instance.TrackEvent(new EnergyDrinkEvent()); 
 
         _eventManager.GetComponent<TiredEvent>().restartCaffeine();
     }

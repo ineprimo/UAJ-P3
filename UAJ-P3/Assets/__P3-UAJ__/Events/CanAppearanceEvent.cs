@@ -11,7 +11,7 @@ public enum CanType
 public class CanAppearanceEvent : TrackerEvent
 {
     public CanType canType; // tipo de lata
-    public CanAppearanceEvent(string type, string session, CanType _canType) : base(type, session)
+    public CanAppearanceEvent(string type, CanType _canType) : base(type)
     {
         canType = _canType;
 

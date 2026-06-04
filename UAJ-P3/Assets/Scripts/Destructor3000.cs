@@ -22,6 +22,6 @@ public class Destructor3000 : MonoBehaviour
         Debug.Log("Destrcutor");
 
         if (Tracker.Instance != null)
-            Tracker.Instance.TrackEvent(new DunkCanEvent("can_landed", Tracker.Instance.getSessionId(), (CanType)other.GetComponent<Producto>().color(), TargetType.Bin));
+            Tracker.Instance.TrackEvent(new DunkCanEvent("can_landed", (CanType)other.GetComponent<Producto>().color(), TargetType.Bin));
     }
 }

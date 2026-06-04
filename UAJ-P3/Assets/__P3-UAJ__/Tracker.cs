@@ -44,7 +44,7 @@ public class Tracker
             isInitialized = true;
 
             // comienza la sesion
-            TrackEvent(new SessionStart(Tracker.Instance.getSessionId()));
+            TrackEvent(new SessionStart());
         }
         catch(System.Exception)
         {
@@ -62,6 +62,8 @@ public class Tracker
         {
             Debug.Log("tracker event created, sending to persistance");
 
+            e.sessionId = sessionId;
+
             persistence.Send(e);
         }
         catch (System.Exception)
@@ -70,9 +72,6 @@ public class Tracker
         }
 
     }
-
-    //cuando se quiera lanzar un evento se pide el id de sesion al tracker para rellenar la info del evento
-    public string getSessionId() { return sessionId; }
     
     //al iniciar la sesion generamos un id unico (si tuvieramos un servidor sustituiriamos la generacion del id por una request al servidor) 
     private string getNewSessionId()
