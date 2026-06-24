@@ -2,20 +2,27 @@
 
 ## Índice
 
-* [1. Introducción](#1-introducción)
-    * [1.1 Estructura del repositorio](#11-estructura-del-repositorio)
-* [2. Objetivos](#2-objetivos)
-* [3. Hipótesis y Preguntas](#3-hipótesis-y-preguntas)
-* [4. Descripción de las métricas](#4-descripción-de-las-métricas)
-* [5. Descripción de los eventos](#5-descripción-de-los-eventos)
-    * [5.1 Eventos genéricos](#51-eventos-genéricos)
-    * [5.2 Eventos específicos por partida](#52-eventos-específicos-por-partida)
-* [6. Cálculo de métricas](#6-cálculo-de-métricas)
-* [7. Alineamiento de las métricas con los objetivos e hipótesis](#7-alineamiento-de-las-métricas-con-los-objetivos-e-hipótesis)
-* [8. Análisis y métricas](#8-análisis-y-métricas)
-    * [8.1 Instrucciones de Reproducción](#81-instrucciones-de-reproducción)
-    * [8.2 Análisis de Hipótesis y Preguntas de Investigación](#82-análisis-de-hipótesis-y-preguntas-de-investigación)
-* [9. Instrumentalización](#9-instrumentalización)
+- [Práctica 3: Sistema de Telemetría](#práctica-3-sistema-de-telemetría)
+  - [Índice](#índice)
+  - [1. Introducción](#1-introducción)
+    - [1.1 Estructura del repositorio](#11-estructura-del-repositorio)
+  - [2. Objetivos](#2-objetivos)
+  - [3. Hipótesis y Preguntas](#3-hipótesis-y-preguntas)
+  - [4. Descripción de las métricas](#4-descripción-de-las-métricas)
+  - [5. Descripción de los eventos](#5-descripción-de-los-eventos)
+    - [5.1 Eventos genéricos](#51-eventos-genéricos)
+    - [5.2 Eventos específicos por partida](#52-eventos-específicos-por-partida)
+  - [6. Cálculo de métricas](#6-cálculo-de-métricas)
+  - [7. Alineamiento de las métricas con los objetivos e hipótesis](#7-alineamiento-de-las-métricas-con-los-objetivos-e-hipótesis)
+  - [8. Análisis y métricas](#8-análisis-y-métricas)
+    - [8.1 Instrucciones de Reproducción](#81-instrucciones-de-reproducción)
+    - [8.2 Análisis de Hipótesis y Preguntas de Investigación](#82-análisis-de-hipótesis-y-preguntas-de-investigación)
+      - [**Hipótesis 1**: "Si aumentamos la velocidad y cantidad de las latas generadas, el jugador puede llegar a ignorar tareas secundarias."](#hipótesis-1-si-aumentamos-la-velocidad-y-cantidad-de-las-latas-generadas-el-jugador-puede-llegar-a-ignorar-tareas-secundarias)
+      - [**Hipótesis 2**: "El jugador cometerá más errores si se siente saturado."](#hipótesis-2-el-jugador-cometerá-más-errores-si-se-siente-saturado)
+      - [**Pregunta 1**: "¿En qué nivel de saturación de latas el jugador ignora las distracciones?"](#pregunta-1-en-qué-nivel-de-saturación-de-latas-el-jugador-ignora-las-distracciones)
+      - [**Pregunta 2**: "¿Qué tipos de distracciones generan mayor dispersión de clics?"](#pregunta-2-qué-tipos-de-distracciones-generan-mayor-dispersión-de-clics)
+    - [8.3 Comentario general resultado de las métricas](#83-comentario-general-resultado-de-las-métricas)
+  - [9. Instrumentalización](#9-instrumentalización)
 
 ## 1. Introducción
 
@@ -176,6 +183,14 @@ Al cruzar la cantidad y tipo de distracciones (M4) con los mapas de calor (M3), 
 
 **Conclusión**: Se demuestra que ciertas distracciones hacen que el jugador tenga menos control sobre sus clics.
 
+### 8.3 Comentario general resultado de las métricas
+
+* **M1:** El aumento de latas ha sido el principal motivo de la dificultad. El jugador, se estresaba al principio, pero, al darse cuenta de que la cantidad de las latas es cada vez mayor, se iba adaptando a un ritmo.
+* **M2:** La tasa de aciertos/fallos nos ha indicado que, ya que es practicamente imposible acertar todo, el jugador asumía un porcentaje pérdida (sacrificando un tercio de las latas) para no perder el control del resto de la partida.
+* **M3:** En el mapa de calor de clics, hemos podido observar cómo actuaba ante el pánico el jugador, ya que nos ha permitido comprobar de un vistazo si la partida estaba bajo control con clicks ordenados y bien distribuidos o si colapsó intentando resolver las distracciones de manera desordenada por toda la pantalla.
+* **M4:** La cantidad de distracciones de cada tipo nos ha enseñado que la variedad de distracciones es peor que la cantidad. Sufrir distintos eventos por ejemplo una combinacion de gato + apagón + sueño ha roto el bucle de juego mucho más rápido que la repetición de un mismo problema.
+* **M5:** Hemos confirmado que los obstáculos logran su objetivo: desconcentrar al jugador, ya que siempre tenía que ocuparse de las distracciones sin importar el estado de las latas.
+* **M6:** El tiempo de reacción ha medido en qué estado se encontraba el jugador. Identifica en qué punto el usuario está aburrido, cuándo alcanza su pico de concentración máxima, y cuándo se satura.
 
 ## 9. Instrumentalización
 
