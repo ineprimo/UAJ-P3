@@ -2,27 +2,21 @@
 
 ## Índice
 
-- [Práctica 3: Sistema de Telemetría](#práctica-3-sistema-de-telemetría)
-  - [Índice](#índice)
-  - [1. Introducción](#1-introducción)
-    - [1.1 Estructura del repositorio](#11-estructura-del-repositorio)
-  - [2. Objetivos](#2-objetivos)
-  - [3. Hipótesis y Preguntas](#3-hipótesis-y-preguntas)
-  - [4. Descripción de las métricas](#4-descripción-de-las-métricas)
-  - [5. Descripción de los eventos](#5-descripción-de-los-eventos)
-    - [5.1 Eventos genéricos](#51-eventos-genéricos)
-    - [5.2 Eventos específicos por partida](#52-eventos-específicos-por-partida)
-  - [6. Cálculo de métricas](#6-cálculo-de-métricas)
-  - [7. Alineamiento de las métricas con los objetivos e hipótesis](#7-alineamiento-de-las-métricas-con-los-objetivos-e-hipótesis)
-  - [8. Análisis y métricas](#8-análisis-y-métricas)
-    - [8.1 Instrucciones de Reproducción](#81-instrucciones-de-reproducción)
-    - [8.2 Análisis de Hipótesis y Preguntas de Investigación](#82-análisis-de-hipótesis-y-preguntas-de-investigación)
-      - [**Hipótesis 1**: "Si aumentamos la velocidad y cantidad de las latas generadas, el jugador puede llegar a ignorar tareas secundarias."](#hipótesis-1-si-aumentamos-la-velocidad-y-cantidad-de-las-latas-generadas-el-jugador-puede-llegar-a-ignorar-tareas-secundarias)
-      - [**Hipótesis 2**: "El jugador cometerá más errores si se siente saturado."](#hipótesis-2-el-jugador-cometerá-más-errores-si-se-siente-saturado)
-      - [**Pregunta 1**: "¿En qué nivel de saturación de latas el jugador ignora las distracciones?"](#pregunta-1-en-qué-nivel-de-saturación-de-latas-el-jugador-ignora-las-distracciones)
-      - [**Pregunta 2**: "¿Qué tipos de distracciones generan mayor dispersión de clics?"](#pregunta-2-qué-tipos-de-distracciones-generan-mayor-dispersión-de-clics)
-    - [8.3 Comentario general resultado de las métricas](#83-comentario-general-resultado-de-las-métricas)
-  - [9. Instrumentalización](#9-instrumentalización)
+- [1. Introducción](#1-introducción)
+  - [1.1 Estructura del repositorio](#11-estructura-del-repositorio)
+- [2. Objetivos](#2-objetivos)
+- [3. Hipótesis y Preguntas](#3-hipótesis-y-preguntas)
+- [4. Descripción de las métricas](#4-descripción-de-las-métricas)
+- [5. Descripción de los eventos](#5-descripción-de-los-eventos)
+  - [5.1 Eventos genéricos](#51-eventos-genéricos)
+  - [5.2 Eventos específicos por partida](#52-eventos-específicos-por-partida)
+- [6. Cálculo de métricas](#6-cálculo-de-métricas)
+- [7. Alineamiento de las métricas con los objetivos e hipótesis](#7-alineamiento-de-las-métricas-con-los-objetivos-e-hipótesis)
+- [8. Análisis y métricas](#8-análisis-y-métricas)
+  - [8.1 Instrucciones de Reproducción](#81-instrucciones-de-reproducción)
+  - [8.2 Análisis de Hipótesis y Preguntas de Investigación](#82-análisis-de-hipótesis-y-preguntas-de-investigación)
+  - [8.3 Comentario general resultado de las métricas](#83-comentario-general-resultado-de-las-métricas)
+- [9. Instrumentalización](#9-instrumentalización)
 
 ## 1. Introducción
 
@@ -94,10 +88,10 @@ Estos parámetros los incluyen como atributos todos los eventos, salvo los event
     - Color de la lata (Enum { Azul, Rojo, Verde, Rosa })
 
 - **Lata encestada:** Al lanzar la lata, dónde cae (si ha sido encestada en una caja o fallada (suelo/otro)). Aquí no se incluyen las latas de bebida energética, explicadas a continuación.
-- Tipo: “can_landed” (string)
-  - Atributos
-    - Color lata (Enum { Azul, Rojo, Verde, Rosa })
-    - Destino (Enum { Contenedor azul, Contenedor rojo, Basura, Suelo })
+  - Tipo: “can_landed” (string)
+    - Atributos
+      - Color lata (Enum { Azul, Rojo, Verde, Rosa })
+      - Destino (Enum { Contenedor azul, Contenedor rojo, Basura, Suelo })
 
 - **Coger energética:** El jugador agarra la bebida energética y la lanza. La bebida energética se diferencia del resto de latas porque tiene una mecánica propia. Para resolver la distracción del parpadeo, explicado posteriormente, se utiliza esta bebida energética, simplemente agarrándola mediante clic.
   - Tipo: “energy_drink_used” (string)
