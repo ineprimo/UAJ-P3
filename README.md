@@ -56,9 +56,8 @@ Se busca comprender cómo la curva de dificultad ascendente (aumento de la veloc
 Para los eventos, hemos definido unos parámetros generales:
 * **_Timestamp (Int64)_** : indica el momento de tiempo en el que se ha lanzado el evento en segundos (tiempo POSIX).
 * **_ID sesión (string)_**: ID único generado mediante una librería de IDs (_shortid_).
-* **_ID partida (byte)_**: ID de cada partida.
 
-Estos parámetros los incluyen como atributos todos los eventos, salvo los eventos **Inicio de sesión** y **Fin de sesión**, que no incluyen _ID partida_.
+Estos parámetros los incluyen como atributos todos los eventos. 
 
 ### 5.1 Eventos genéricos
 
@@ -102,13 +101,13 @@ Estos parámetros los incluyen como atributos todos los eventos, salvo los event
   - Tipo: “distraction_spawned” (string)
   - Atributos
     - Tipo (Enum { Gato, Mosca, Apagón, Compañeros })
-    - ID de la distracción (para saber a qué evento “Desaparece distracción” corresponde) (byte)
+    - ID de la distracción (para saber a qué evento “Desaparece distracción” corresponde) (int)
 
 - **Desaparece distracción**: La distracción desaparece automaticamente o el jugador la quita.
   - Tipo: ”distraction_despawned” (string)
   - Atributos
     - Tipo (Enum { Gato, Mosca, Apagón, Compañeros })
-    - ID de la distracción (para saber a qué evento “Aparece distracción” corresponde) (byte)
+    - ID de la distracción (para saber a qué evento “Aparece distracción” corresponde) (int)
 
 - **Parpadeo:** Distracción especial que ocurre cuando al jugador le empieza a entrar sueño: la pantalla simula el efecto de cerrar y abrir los ojos. Registramos el momento en el que ocurre esta distracción.
   - Tipo “blink” (string)
