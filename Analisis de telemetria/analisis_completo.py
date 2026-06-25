@@ -10,7 +10,7 @@ folder_path = os.path.dirname(os.path.abspath(__file__))
 # gestiona el spawn de las distracciones
 def distraction_spawned(event, distracciones, clave_partida, tiempos_reaccion, ts):
     tipo_dist = event.get("distractionType", "Desconocida")
-    raw_id = event.get("distractionId") # El ID feo de Unity
+    raw_id = event.get("distractionId") # El ID de Unity
 
     #conversion de ID de unity a uno mas legible
     seq_id = distracciones[clave_partida]["contador_ids"]
