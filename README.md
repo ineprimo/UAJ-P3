@@ -1,5 +1,14 @@
 # Práctica 3: Sistema de Telemetría
 
+## Autores
+
+* Jaime Vicente Arroyo
+* David Canelada Velasco
+* Daniel Zhu
+* Inés Olimpia Primo
+* Paula Sierra Luque
+* Javier Tirado Rios
+
 ## Índice
 
 - [1. Introducción](#1-introducción)
