@@ -56,7 +56,7 @@ Se busca comprender cómo la curva de dificultad ascendente (aumento de la veloc
 Para los eventos, hemos definido unos parámetros generales:
 * **_Timestamp (Int64)_** : indica el momento de tiempo en el que se ha lanzado el evento en segundos (tiempo POSIX).
 * **_ID sesión (string)_**: ID único generado mediante una librería de IDs (_shortid_).
-* **_ID partida (byte)_**: ID de cada partida, va de 0 a n (siendo n el número de partidas jugadas en una sesión).
+* **_ID partida (byte)_**: ID de cada partida.
 
 Estos parámetros los incluyen como atributos todos los eventos, salvo los eventos **Inicio de sesión** y **Fin de sesión**, que no incluyen _ID partida_.
 
@@ -87,7 +87,7 @@ Estos parámetros los incluyen como atributos todos los eventos, salvo los event
   - Atributos
     - Color de la lata (Enum { Azul, Rojo, Verde, Rosa })
 
-- **Lata encestada:** Al lanzar la lata, dónde cae (si ha sido encestada en una caja o fallada (suelo/otro)). Aquí no se incluyen las latas de bebida energética, explicadas a continuación.
+- **Lata encestada:** Al lanzar la lata, especificamos dónde cae (si ha sido encestada en una caja o fallada (suelo/otro)). Aquí no se incluyen las latas de bebida energética, explicadas a continuación.
   - Tipo: “can_landed” (string)
     - Atributos
       - Color lata (Enum { Azul, Rojo, Verde, Rosa })
@@ -167,7 +167,7 @@ Los datos muestran una estabilización del rendimiento que matiza esta hipótesi
 **Conclusión**: Existe una penalización inicial en el rendimiento cuando se supera el umbral de las 100 latas, cayendo la precisión un 10%. Sin embargo, una vez alcanzado este nivel de estrés, el jugador parece encontrar un "tope" de error, manteniendo una tasa de acierto del 65% independientemente de si le lanzan 120 o 160 latas.
 
 #### **Pregunta 1**: "¿En qué nivel de saturación de latas el jugador ignora las distracciones?"
-Basándonos en la Métrica 6 (Tiempo medio de reacción) y cruzando con la M1, podemos definir el perfil cognitivo del jugador ante la saturación. En las partidas de intensidad baja y extrema (75 y 167 latas), el jugador tarda casi 10 segundos de media en reaccionar a una distracción. Sin embargo, en la partida media de 119 latas, su tiempo de reacción bajó drásticamente a 4.66 segundos.
+Basándonos en la M6 (Tiempo medio de reacción) y cruzando con la M1, podemos definir el perfil cognitivo del jugador ante la saturación. En las partidas de intensidad baja y extrema (75 y 167 latas), el jugador tarda casi 10 segundos de media en reaccionar a una distracción. Sin embargo, en la partida media de 119 latas, su tiempo de reacción bajó drásticamente a 4.66 segundos.
 
 **Conclusión**: El jugador nunca llega a ignorar las distracciones por completo. Más bien, los datos sugieren que en torno a las 110-120 latas el jugador entra en su estado de "flujo" (flow state) óptimo, reaccionando rapidísimo (4.66s). Cuando se rompe ese umbral y se acerca a las 170 latas, la sobrecarga cognitiva es tan grande que, aunque sigue resolviendo las distracciones (M5), su cerebro tarda el doble de tiempo (casi 10 segundos) en procesar visualmente el obstáculo.
 
